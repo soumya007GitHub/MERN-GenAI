@@ -1,0 +1,3 @@
+What is prompt engineering?
+Ans - Prompt engineering is the process of crafting precise and effective prompts to guide generative AI models, like large language models (LLMs), in producing desired outputs.
+      It's about designing inputs (prompts) that interact optimally with the AI model, helping it understand the task and generate accurate, relevant, and creative responses.
