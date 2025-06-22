@@ -1,0 +1,5 @@
+What is Generative AI?
+Ans - Generative AI refers to a type of artificial intelligence that creates new content, such as text, images, audio, and video, by learning patterns from existing data. 
+
+What is the difference between Generative AI & Traditional AI?
+Ans - Unlike traditional AI, which focuses on tasks like classification or prediction, generative AI is designed to produce original outputs based on prompts or instructions. 
