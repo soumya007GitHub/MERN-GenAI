@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example 1</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            height:100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container{
+            display: flex;
+            flex-direction: row;
+            max-width: 50%;
+            width: 100%;
+            box-shadow: 2px 2px 10px rgb(210, 210, 210);
+            border-radius: 10px;
+        }
+        .f_container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            background-color: rgb(1, 18, 91);
+            flex: 1.1;
+            color: #fff;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        .profile_photo{
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid rgb(250, 209, 4);
+            padding: 5px;
+        }
+        .moreInfo{
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        .contact_info{
+            text-decoration: none;
+            color: #fff;
+        }
+        .title{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .bio{
+            font-style: italic;
+        }
+        .bio::first-letter{
+            text-transform:uppercase;
+            font-weight: bold;
+            font-size: 20px;
+            color: rgb(4, 148, 252);
+        }
+        ol{
+            list-style-type: lower-roman;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/a359d5e7cb.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="f_container">
+            <img src="https://avatars.githubusercontent.com/u/130821564?v=4" alt="profile photo" class="profile_photo"/>
+            <div class="title">
+                <h2>Soumya Tripathy</h2>
+                <a href="tel:9692229679" class="contact_info"><i class="fa-solid fa-phone"></i> +91-9692229679</a><br>
+                <a href="mailto:soumyatripathy977@gmail.com" class="contact_info"><i class="fa-solid fa-envelope"></i> soumyatripathy977@gmail.com</a>
+            </div>
+        </div>
+            <div class="moreInfo">
+                <p class="bio">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ex, delectus et modi reiciendis repudiandae vero iure nobis soluta similique!</p>
+                <h3>Skills</h3>
+                <ol>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>BootStrap CSS</li>
+                    <li>Tailwind CSS</li>
+                    <li>JavaScript</li>
+                    <li>React JS</li>
+                    <li>PHP</li>
+                    <li>MySQL</li>
+                    <li>MongoDB</li>
+                </ol>
+            </div>
+    </div>
+</body>
+
+</html>
