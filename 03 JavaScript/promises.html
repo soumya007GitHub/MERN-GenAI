@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API method</title>
+</head>
+<body>
+<script>
+    let myPromise = new Promise((resolve, reject)=>{
+        let success = true;
+        if(success){
+            resolve("😊");
+        }
+        else{
+            reject("😑");
+        }
+    });
+
+    myPromise.then((data)=>{
+        console.log(data);
+    }).catch((error)=>{
+        console.log(error);
+    }).finally(()=>{
+        console.log("promise finished");
+    });
+</script>
+</body>
+</html>
