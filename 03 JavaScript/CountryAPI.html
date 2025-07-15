@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Finder</title>
+    <style>
+        .container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .formContainer {
+            width: 50%;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 20px 10px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            width: 90%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loader {
+            height: 30px;
+            width: 30px;
+            border-top: 4px solid red;
+            border-left: 4px solid red;
+            border-bottom: 4px solid red;
+            border-right: 4px solid white;
+            border-radius: 100%;
+            animation: spin 2s linear infinite;
+            position: absolute;
+        }
+
+        .resultDiv,
+        .errorDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 10px;
+            flex-direction: column;
+        }
+
+        .blurred {
+            filter: blur(3px);
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<div class="container">
+    <div class="formContainer">
+        <form action="" id="form">
+            <label for="country">Enter Country</label>
+            <input type="text" name="country" id="country" placeholder="e.g.United States">
+            <input type="submit" value="Search" id="search">
+        </form>
+        <div class="output"></div>
+    </div>
+    <!-- Loader -->
+    <div class="loader hidden" id="loader">
+    </div>
+</div>
+
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let inputField = document.getElementById('country');
+            let form = document.getElementById('form');
+
+            form.addEventListener('submit', async (e) => {
+                // Preventing default form submission
+                e.preventDefault();
+
+                // making body blur
+                let body = document.getElementsByClassName('formContainer')[0];
+                body.classList.add('blurred');
+
+                // targeting loader to be displayed
+                let loader = document.getElementById('loader');
+                loader.classList.remove('hidden');
+
+                // targeting input field to get value
+                let enteredCountry = inputField.value;
+
+                // fetching value from API
+                let result = await fetch(`https://restcountries.com/v3.1/name/${enteredCountry}?fullText=true`);
+
+                if (result.status == 404) {
+                    // hiding loader after data fetched
+                loader.classList.add('hidden');
+                inputField.value = '';
+
+                // un-blurring the screen
+                body.classList.remove('blurred');
+                document.getElementsByClassName('output')[0].innerHTML = '';
+                    let errorDiv = document.createElement('div');
+                    errorDiv.classList.add('errorDiv');
+                    errorDiv.innerHTML = `<p>No country exists with name as <b>${enteredCountry}</b></p><br>
+                                            <p>Please retype the full country name correctly if it's different :)`;
+                    document.getElementsByClassName('output')[0].appendChild(errorDiv);
+                }
+
+                else{
+                let country = await result.json();
+
+                let countryName = country[0].name.common;
+                let flag = country[0].flags.png;
+                let capital = country[0].capital[0];
+                let continent = country[0].continents[0];
+                let languagesArray = Object.values(country[0].languages);
+
+                document.getElementsByClassName('output')[0].innerHTML = '';
+
+
+                let resultDiv = document.createElement('div');
+                resultDiv.classList.add('resultDiv');
+                resultDiv.innerHTML = `<img src='${flag}' alt='countryFlag' style='border: 1px solid black; max-width:100%'/>
+                    <h3>${countryName}</h3>
+                    <p>Capital - ${capital}</p>
+                    <p>Continent - ${continent}</p>
+                    <p>Languages - ${languagesArray}</p>`;
+
+
+                document.getElementsByClassName('output')[0].appendChild(resultDiv);
+
+
+                // Setting input field blank again
+                inputField.value = '';
+
+                // hiding loader after data fetched
+                loader.classList.add('hidden');
+
+                // un-blurring the screen
+                body.classList.remove('blurred');
+                }
+
+            })
+        })
+    </script>
+</body>
+
+</html>
