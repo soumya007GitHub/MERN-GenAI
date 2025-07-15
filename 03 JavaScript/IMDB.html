@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies finder</title>
+    <style>
+        body {
+            overflow-y: auto;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .form {
+            width: 60%;
+        }
+
+        .form form {
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px 10px;
+        }
+
+        .output {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 10px 10px;
+        }
+
+        .movie {
+            width: 30%;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 20px;
+        }
+
+        .spinner {
+            position: absolute;
+            height: 50px;
+            width: 50px;
+            border-top: 4px solid red;
+            border-bottom: 4px solid red;
+            border-left: 4px solid red;
+            border-right: 4px solid white;
+            border-radius: 100%;
+            animation: spin 2s linear infinite;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .blurred {
+            filter: blur(3px);
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form">
+            <form action="">
+                <label for="movie">Enter Movie Name</label>
+                <input type="text" name="movie" id="movie" placeholder="e.g. Spider Man">
+                <input type="submit" value="Search" id="search">
+            </form>
+        </div>
+        <div class="output">
+        </div>
+        <div class="spinner hidden"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let form = document.getElementsByTagName('form')[0];
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let movieName = document.getElementById('movie').value;
+                let output = document.getElementsByClassName('output')[0];
+
+                let spinnerDiv = document.getElementsByClassName('spinner')[0];
+                spinnerDiv.classList.remove('hidden');
+
+                output.innerHTML = '';
+
+                document.getElementsByClassName('form')[0].classList.add('blurred');
+
+                setTimeout(()=>{
+                    async function fetchMovies(movieName) {
+                    let result = await fetch(`https://imdb.iamidiotareyoutoo.com/search?q=${movieName}`);
+                    let moviesObj = await result.json();
+                    let moviesArray = moviesObj.description;
+                    moviesArray.forEach(element => {
+                        let movieDiv = document.createElement('div');
+                        movieDiv.classList.add('movie');
+
+                        movieDiv.innerHTML = `
+                        <img src='${element["#IMG_POSTER"] || 'https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg'}' alt='movie poster' style='width:80%; height: auto; object-fit: cover;'/>
+                        <h3>${element["#TITLE"]}</h3>
+                        <p>${element["#YEAR"]}</p>
+                        <p>${element["#ACTORS"]}</p>`;
+
+                        output.appendChild(movieDiv);
+                    });
+                document.getElementById('movie').value = '';
+                document.getElementsByClassName('form')[0].classList.remove('blurred');
+                spinnerDiv.classList.add('hidden');
+                }
+                
+                fetchMovies(movieName);}, 2000);
+            })
+        })
+    </script>
+</body>
+
+</html>
